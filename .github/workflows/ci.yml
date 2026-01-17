@@ -1,0 +1,20 @@
+# Horizon Simulation Lab -- simulated CI (Phase 6c). Dispatched by the
+# simulator on a story's branch with the result the scenario asks for; the
+# check run this job leaves on the head is what branch protection counts
+# and what Horizon reads. Not triggered by pushes on purpose.
+name: ci
+on:
+  workflow_dispatch:
+    inputs:
+      result:
+        description: "success | failure"
+        required: true
+        default: "success"
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - name: simulated tests
+        run: |
+          echo "simulated CI result: ${{ inputs.result }}"
+          test "${{ inputs.result }}" = "success"
